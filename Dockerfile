@@ -8,7 +8,7 @@ RUN yum install -y centos-release-scl && \
 WORKDIR /app
 
 # 将当前目录文件加入到工作目录/app中（如果有必要的话）
-# ADD . /app
+ADD . /app
 
 # 使用pip安装 llama-cpp-python
 RUN ls /app && bash /app/install-python38.sh
