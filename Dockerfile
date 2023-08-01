@@ -1,12 +1,9 @@
 # 使用CentOS 7镜像作为基础镜像
 FROM centos:7
 
-# 更新软件包列表并安装EPEL Repository
-RUN yum install -y epel-release && \
-    sed -i 's|^#baseurl=https://download.fedoraproject.org/pub/epel|baseurl=https://mirrors.aliyun.com/epel|g' /etc/yum.repos.d/epel.repo && \
-    sed -i 's|^metalink|#metalink|g' /etc/yum.repos.d/epel.repo && \
-    yum clean all && \
-    yum makecache
+RUN yum install centos-release-scl && \
+    yum install devtoolset-11-gcc devtoolset-11-gcc-c++ devtoolset-11-binutils && \
+    scl enable devtoolset-11 bash
 
 # 安装Python3.8
 RUN yum install -y python38 python38-pip python38-devel
@@ -18,5 +15,5 @@ WORKDIR /app
 # ADD . /app
 
 # 使用pip安装 llama-cpp-python
-RUN python3.8 -m pip install llama-cpp-python[server]
+RUN python3.8 -m pip install llama-cpp-python[server]==0.1.77
 
