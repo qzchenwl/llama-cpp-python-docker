@@ -1,8 +1,8 @@
 # 使用CentOS 7镜像作为基础镜像
 FROM centos:7
 
-RUN yum install centos-release-scl && \
-    yum install devtoolset-11-gcc devtoolset-11-gcc-c++ devtoolset-11-binutils && \
+RUN yum install -y centos-release-scl && \
+    yum install -y devtoolset-11-gcc devtoolset-11-gcc-c++ devtoolset-11-binutils && \
     scl enable devtoolset-11 bash
 
 # 安装Python3.8
