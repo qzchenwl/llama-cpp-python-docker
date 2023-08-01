@@ -2,10 +2,11 @@
 FROM centos:7
 
 # 更新软件包列表并安装EPEL Repository
-RUN yum update -y && \
-    yum install -y epel-release && \
-    yum install -y https://repo.ius.io/ius-release-el7.rpm && \
-    rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-IUS-7
+RUN yum install -y epel-release && \
+    sed -i 's|^#baseurl=https://download.fedoraproject.org/pub/epel|baseurl=https://mirrors.aliyun.com/epel|g' /etc/yum.repos.d/epel.repo && \
+    sed -i 's|^metalink|#metalink|g' /etc/yum.repos.d/epel.repo && \
+    yum clean all && \
+    yum makecache
 
 # 安装Python3.8
 RUN yum install -y python38 python38-pip python38-devel
