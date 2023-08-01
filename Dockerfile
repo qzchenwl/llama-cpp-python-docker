@@ -6,7 +6,8 @@ RUN yum install -y centos-release-scl && \
     scl enable devtoolset-11 bash
 
 # 安装Python3.8
-RUN yum install -y python38 python38-pip python38-devel
+RUN yum install -y https://repo.ius.io/ius-release-el7.rpm && \
+    yum install -y python38 python38-pip python38-devel
 
 # 将工作目录设置为/app
 WORKDIR /app
