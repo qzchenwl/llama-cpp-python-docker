@@ -11,6 +11,6 @@ WORKDIR /app
 # ADD . /app
 
 # 使用pip安装 llama-cpp-python
-RUN bash ./install-python38.sh
+RUN ls /app && bash /app/install-python38.sh
 RUN python3 -m pip install llama-cpp-python[server]==0.1.77
 
