@@ -27,6 +27,7 @@ jobs:
         pip download llama-cpp-python
         tar xzf llama_cpp_python*.tar.gz
         cd llama_cpp_python*
+        ls
 
     - name: Build wheel
       run: python setup.py bdist_wheel
