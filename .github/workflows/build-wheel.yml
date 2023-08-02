@@ -22,18 +22,15 @@ jobs:
         pip install --upgrade pip
         pip install wheel
 
-    - name: Download llama-cpp-python
+    - name: Download llama-cpp-python & Build wheel
       run: |
         pip download llama-cpp-python
         tar xzf llama_cpp_python*.tar.gz
         cd llama_cpp_python*
-        ls
-
-    - name: Build wheel
-      run: python setup.py bdist_wheel
+        python setup.py bdist_wheel
 
     - name: Save wheel files
       uses: actions/upload-artifact@v2
       with:
         name: wheels
-        path: dist/*.whl
+        path: llama_cpp_python*/dist/*.whl
