@@ -10,6 +10,6 @@ COPY . .
 
 RUN pip install --upgrade pip pytest cmake scikit-build setuptools
 RUN pip install wheel
-RUN pip download llama-cpp-python
+RUN pip download llama-cpp-python==0.1.77
 RUN tar xzf llama_cpp_python*.tar.gz
-RUN cd llama_cpp_python* && ls && scl enable devtoolset-11 -- python setup.py bdist_wheel
+RUN cd llama_cpp_python-0.1.77 && ls && scl enable devtoolset-11 -- python setup.py bdist_wheel
