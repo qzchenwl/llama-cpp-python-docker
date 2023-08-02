@@ -1,0 +1,43 @@
+name: Build Wheel
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    container:
+      image: centos/python-38-centos7
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Python 3.8
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8
+
+    - name: Install dependencies
+      run: |
+        pip install --upgrade pip
+        pip install wheel
+
+    - name: Download llama-cpp-python
+      run: |
+        pip download llama-cpp-python
+        tar xzf llama-cpp-python*.tar.gz
+        cd llama-cpp-python*
+
+    - name: Build wheel
+      run: python setup.py bdist_wheel
+
+    - name: Save wheel files
+      uses: actions/upload-artifact@v2
+      with:
+        name: wheels
+        path: dist/*.whl
