@@ -27,7 +27,7 @@ jobs:
 
     - name: Copy wheel file from Docker container
       run: |
-        docker cp my-container:/src/dist ./dist
+        docker cp my-container:/src/llama_cpp_python-0.1.77/dist ./dist
 
     - name: Upload wheel file
       uses: actions/upload-artifact@v2
