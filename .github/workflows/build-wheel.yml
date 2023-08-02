@@ -1,36 +1,36 @@
-name: Build Wheel
+name: Build wheel
 
 on:
   push:
-    branches: [ master ]
+    branches: [ main ]
   pull_request:
-    branches: [ master ]
+    branches: [ main ]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
-    container:
-      image: centos/python-38-centos7
-
     steps:
-    - uses: actions/checkout@v2
+    - name: Check out code
+      uses: actions/checkout@v2
 
-    - name: Install dependencies
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v1
+
+    - name: Build Docker image
       run: |
-        pip install --upgrade pip
-        pip install wheel
+        docker build . -t my-python-package -f Dockerfile
 
-    - name: Download llama-cpp-python & Build wheel
+    - name: Run Docker container
       run: |
-        pip download llama-cpp-python
-        tar xzf llama_cpp_python*.tar.gz
-        cd llama_cpp_python*
-        python setup.py bdist_wheel
+        docker run --name my-container my-python-package
 
-    - name: Save wheel files
+    - name: Copy wheel file from Docker container
+      run: |
+        docker cp my-container:/src/dist ./dist
+
+    - name: Upload wheel file
       uses: actions/upload-artifact@v2
       with:
-        name: wheels
-        path: llama_cpp_python*/dist/*.whl
+        name: wheel-file
+        path: dist/*.whl
